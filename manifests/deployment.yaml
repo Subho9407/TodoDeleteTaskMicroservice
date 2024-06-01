@@ -1,22 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: delete-task
+  name: todo-delete-task-deployment
 spec:
   replicas: 3
   selector:
-    matchLabels:
-      app: delete-task
+    matchExpressions: 
+      - key: app
+        operator: In
+        values: 
+        - todo-delete-task
+  strategy: 
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
-        app: delete-task
+        app: todo-delete-task
     spec:
       containers:
       - name: delete-task
         env:
           - name: CONNECTION_STRING
-            value: "Driver={ODBC Driver 17 for SQL Server};Server=tcp:devopsinsiderssrv.database.windows.net,1433;Database=todoapp;Uid=devopsadmin;Pwd=P@ssw01rd@123;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
-        image: devopsinsiders/delete-task
+            value: "Driver={ODBC Driver 17 for SQL Server};Server=tcp:subho-db.database.windows.net,1433;Database=subho-db;Uid=adminuser;Pwd=GQ4C9q`p[9A£;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+        image: subho9407/todobackend-delete_task
         ports:
         - containerPort: 8000
