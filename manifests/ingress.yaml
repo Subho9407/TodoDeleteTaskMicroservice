@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: delete-task-ingress
+spec: 
+  ingressClassName: nginx
+  rules: 
+  - host: delete-task.subhojitgoswami.cloud
+    http: 
+      paths: 
+      - backend: 
+          service: 
+            name: todo-delete-task-svc
+            port: 
+              number: 80
+        path: /
+        pathType: Prefix
